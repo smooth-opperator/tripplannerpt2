@@ -36,8 +36,14 @@ function searchDB(name, type){
 $('.pull-right').on('click', function(){
 	var selected = ($(this).siblings().eq(1).val());
 	if ($(this).siblings().eq(0).text() === "Hotels"){
-		$('.panel-body').find('.hotels').append('<div class=itinerary-item><span class=title>' + selected + '</span><button class="btn btn-xs btn-danger remove btn-circle">x</button></div>')
+		if ($('.hotels').children().length <1) {
+			$('.panel-body').find('.hotels').append('<div class=itinerary-item><span class=title>' + selected + '</span><button class="btn btn-xs btn-danger remove btn-circle">x</button></div>')
 		searchDB(selected, 'hotels')
+		}
+		else {
+			console.log($('.panel-body').find('.hotels').children());
+			$('.panel-body').find('.title').text(selected);
+		}
 	}
 	else if ($(this).siblings().eq(0).text() === "Restaurants"){
 		$('.panel-body').find('.restaurants').append('<div class=itinerary-item><span class=title>' + selected + '</span><button class="btn btn-xs btn-danger remove btn-circle">x</button></div>')
@@ -49,10 +55,12 @@ $('.pull-right').on('click', function(){
 	}
 	})
 
-$('.day-btn').on('click', function(){
-	
-	$(this).siblings().removeClass('current-day');
-	$(this).addClass('current-day')
+$('.day-buttons').on('click', '.day-btn', function(){
+	console.log("hi");
+	if ($(this).text() == "+") {
+		return;
+	}
+	$(this).toggleClass('current-day').siblings('.current-day').toggleClass('current-day');
 })
 
 $('.add-new').on('click', function(){
